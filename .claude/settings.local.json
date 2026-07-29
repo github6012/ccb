@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(cmd.exe *)",
+      "Bash(node -e \"console.log\\('node ok'\\)\")",
+      "Bash(npm install *)",
+      "Bash(node *)",
+      "Bash(mkdir -p \"/c/Users/l/Desktop/ccb3-miniprogram/static/logo\")",
+      "Bash(cp \"/c/Users/l/Desktop/ccb/logo/bg.jpg\" \"/c/Users/l/Desktop/ccb3-miniprogram/static/logo/bg.jpg\")",
+      "Bash(cp \"/c/Users/l/Desktop/ccb/photos/descriptions.md\" \"/c/Users/l/Desktop/ccb3-miniprogram/static/descriptions.md\")",
+      "Bash(netstat -ano)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:5500/photos/photo_001.png\")",
+      "Bash(rm build_data.js)",
+      "Read(//c/c/Users/l/Desktop/ccb3-miniprogram/static/**)",
+      "Bash(file photos/*.jpg)",
+      "Bash(identify photos/*.jpg)",
+      "Bash(python -c \"from PIL import Image; print\\('Pillow available'\\)\")",
+      "Bash(npx --version)",
+      "Bash(npm list *)",
+      "Bash(icacls photos/thumbs/photo_094.webp)",
+      "Bash(cacls photos/thumbs/photo_094.webp)",
+      "Bash(python3 -c \"import openpyxl; wb = openpyxl.load_workbook\\('自我介绍\\(1\\).xlsx'\\); ws = wb.active; print\\(f'Sheet: {ws.title}, Rows: {ws.max_row}, Cols: {ws.max_column}'\\); [print\\([cell.value for cell in row]\\) for row in ws.iter_rows\\(\\)]\")",
+      "Bash(python -c \"import openpyxl; wb = openpyxl.load_workbook\\('自我介绍\\(1\\).xlsx'\\); ws = wb.active; print\\(f'Sheet: {ws.title}, Rows: {ws.max_row}, Cols: {ws.max_column}'\\); [print\\([cell.value for cell in row]\\) for row in ws.iter_rows\\(\\)]\")",
+      "Bash(/c/Python313/python -c \"import openpyxl; wb = openpyxl.load_workbook\\('自我介绍\\(1\\).xlsx'\\); ws = wb.active; print\\(f'Sheet: {ws.title}, Rows: {ws.max_row}, Cols: {ws.max_column}'\\); [print\\([cell.value for cell in row]\\) for row in ws.iter_rows\\(\\)]\")",
+      "Bash(/c/Users/l/AppData/Local/Programs/Python/Python313/python -c \"import openpyxl; wb = openpyxl.load_workbook\\('自我介绍\\(1\\).xlsx'\\); ws = wb.active; print\\(f'Sheet: {ws.title}, Rows: {ws.max_row}, Cols: {ws.max_column}'\\); [print\\([cell.value for cell in row]\\) for row in ws.iter_rows\\(\\)]\")",
+      "Bash(pip3 install *)",
+      "Bash(/d/anaconda/python *)",
+      "Bash(npx --yes sharp-cli --help)",
+      "Bash(cd \"C:\\\\\\\\Users\\\\\\\\l\\\\\\\\Desktop\\\\\\\\ccb\")",
+      "Bash(npm init *)",
+      "Bash(python -c \"from PIL import Image; print\\('Pillow OK'\\)\")",
+      "Bash(pip3 list *)",
+      "Bash(where python3 *)",
+      "Bash(where python *)",
+      "Bash(D:\\\\Anaconda\\\\python.exe *)"
+    ]
+  }
+}
