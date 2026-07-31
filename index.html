@@ -313,6 +313,26 @@
     opacity: 0.5;
   }
 
+  .info-panel .info-content {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .info-panel.active .info-content { display: flex; }
+
+  .info-panel .info-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #F5F0E6;
+    letter-spacing: 0.08em;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+
   .info-panel .info-text {
     font-size: 15px;
     font-family: 'SimSun', '宋体', serif;
@@ -321,10 +341,9 @@
     overflow-y: auto;
     padding: 4px 0;
     flex: 1;
-    display: none;
+    display: block;
   }
 
-  .info-panel.active .info-text { display: block; }
   .info-panel.active .placeholder { display: none; }
 
   /* ── Responsive: tablets ── */
@@ -379,6 +398,12 @@
       flex: 1;
     }
 
+    .info-panel .info-name {
+      font-size: 22px;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
     .info-panel .info-text {
       font-size: 14px;
     }
@@ -417,6 +442,12 @@
     .cell.highlight,
     .cell.locked { transform: scale(2.5); }
 
+    .info-panel .info-name {
+      font-size: 20px;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
     .info-panel .info-text { font-size: 13px; }
 
     .grid-overlay-img {
@@ -448,7 +479,10 @@
       <span class="icon">&#9670;</span>
       将鼠标悬停在<br>照片拼图上查看详情
     </div>
-    <p class="info-text" id="infoText"></p>
+    <div class="info-content" id="infoContent">
+      <div class="info-name" id="infoName"></div>
+      <p class="info-text" id="infoText"></p>
+    </div>
   </div>
 </div>
 
@@ -485,7 +519,7 @@ function toMobileThumbPath(origFilename) {
 
 // ── Parse descriptions.md ──
 async function loadDescriptions() {
-  const res = await fetch('photos/descriptions.md?v=2');
+  const res = await fetch('photos/descriptions.md?v=3');
   const md = await res.text();
   const photos = [];
   const sections = md.split(/^### /gm).filter(s => /^\d+\./.test(s));
@@ -547,6 +581,8 @@ function getIsMobile() {
 const mosaicGrid     = document.getElementById('mosaicGrid');
 const mosaicWrapper  = document.getElementById('mosaicWrapper');
 const infoPanel      = document.getElementById('infoPanel');
+const infoContent    = document.getElementById('infoContent');
+const infoName       = document.getElementById('infoName');
 const infoText       = document.getElementById('infoText');
 const placeholder    = infoPanel.querySelector('.placeholder');
 const searchInput    = document.getElementById('searchInput');
@@ -863,12 +899,20 @@ function findCellByNum(num) {
 
 // ── Info panel (text only, no preview image) ──
 function showInfo(photo) {
-  infoText.textContent = photo.info;
+  const match = photo.info.match(/^\*\*(.+?)\*\*/);
+  if (match) {
+    infoName.textContent = match[1];
+    infoText.textContent = photo.info.slice(match[0].length).replace(/^\n+/, '');
+  } else {
+    infoName.textContent = '';
+    infoText.textContent = photo.info;
+  }
   infoPanel.classList.add('active');
 }
 
 function hideInfo() {
   infoPanel.classList.remove('active');
+  infoName.textContent = '';
   infoText.textContent = '';
 }
 
@@ -910,6 +954,11 @@ function lockCell(cell) {
   showInfo(photo);
   preloadPreview(photo);
 
+  const num = parseInt(cell.dataset.num);
+  const entry = nameIndex[num];
+  searchInput.value = entry ? entry.name : '';
+  searchDropdown.classList.remove('show');
+
   showOverlay(photo);
 }
 
@@ -920,6 +969,8 @@ function unlockCell() {
   }
   hideInfo();
   hideOverlay();
+  searchInput.value = '';
+  searchDropdown.classList.remove('show');
 }
 
 // ── Pointer (throttled via rAF) ──
@@ -927,7 +978,7 @@ let lastClientX = 0;
 let lastClientY = 0;
 
 function handlePointer(clientX, clientY) {
-  if (lockedCell) return;
+  if (lockedCell || getIsMobile()) return;
 
   lastClientX = clientX;
   lastClientY = clientY;
@@ -967,7 +1018,7 @@ mosaicWrapper.addEventListener('pointerdown', (e) => {
 mosaicWrapper.addEventListener('click', (e) => {
   const cell = getCellAt(e.clientX, e.clientY);
   if (!cell) {
-    if (lockedCell) { unlockCell(); searchInput.value = ''; }
+    if (lockedCell) { unlockCell(); }
     return;
   }
   lockCell(cell);
