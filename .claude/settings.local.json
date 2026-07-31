@@ -33,7 +33,13 @@
       "Bash(pip3 list *)",
       "Bash(where python3 *)",
       "Bash(where python *)",
-      "Bash(D:\\\\Anaconda\\\\python.exe *)"
+      "Bash(D:\\\\Anaconda\\\\python.exe *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(pip install *)",
+      "Bash(git reset *)"
     ]
   }
 }
